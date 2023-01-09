@@ -19,8 +19,7 @@ const purchasesToPurchasesByDay = (purchases) => purchases.reduce((acc, [day, it
   }, {});
 const calculateTotal = (purchases, prices) => {
   const purchasesByDay = purchasesToPurchasesByDay(purchases);
-  return Object.keys(purchasesByDay).reduce((acc, key) => {
-    const {popcorn = 0, soda = 0} = purchasesByDay[key];
+  return Object.values(purchasesByDay).reduce((acc, {popcorn = 0, soda = 0}) => {
     const numBundles = Math.min(popcorn, soda);
     return acc + numBundles * prices.both + (popcorn - numBundles) * prices.popcorn + (soda - numBundles) * prices.soda;
   }, 0);
