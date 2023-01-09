@@ -16,20 +16,19 @@ const maxConcurrentSessions = (sessions) => {
   let lastIndex = 0;
   let max = 0;
   let maxStartIndex;
-  sessions.forEach((session) => {
-    const [start, end ] = session;
+  sessions.forEach(([start, end ]) => {
     if(start < firstIndex) firstIndex = start;
     if(end > lastIndex) lastIndex = end;
     for(let i = start; i <= end; i++) {
-      sessionsByTime[i] = !sessionsByTime[i] ? 1 : sessionsByTime[i] +1 ;
+      sessionsByTime[i] = !sessionsByTime[i] ? 1 : sessionsByTime[i] + 1;
       if (max < sessionsByTime[i]) {
         max = sessionsByTime[i];
         maxStartIndex = i;
       }
     };
   });
+
   let maxEnd = maxStartIndex;
-  
   for(let i = maxStartIndex; i <= lastIndex; i++) {
     if(sessionsByTime[i] < max) {
       break;
@@ -39,6 +38,7 @@ const maxConcurrentSessions = (sessions) => {
   }
   return `${max} (from ${maxStartIndex} to ${maxEnd})`;
 }
+
 describe('Test suite', function() {
   it('check simple', function() {
     assert.equal(maxConcurrentSessions([[2,5]]), "1 (from 2 to 5)");
