@@ -58,11 +58,7 @@ const it = (name: string, cb: Function) => {
   return ret;
 }
 
-interface IObjectKeys {
-  [key: string]: number;
-};
-
-interface Inventory extends IObjectKeys {
+interface Inventory {
   J: number;
   H: number;
   S: number;
@@ -81,7 +77,7 @@ const checkInventory = (order: Partial<Inventory>, inventory: Record<string, Inv
   Object.entries(inventory).reduce((acc:string[], [city, availability]) => {
     let needed = Object.entries(order).length
     for (let [itemName, itemQty = 0] of Object.entries(order)) {
-      if(availability?.[itemName] >= itemQty ) needed--;
+      if(availability?.[itemName as keyof Inventory] >= itemQty ) needed--;
     }
     if(needed === 0) {
       acc.push(city.substring(0,3));
