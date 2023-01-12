@@ -25,11 +25,11 @@ const it = (name: string, cb: Function) => {
   return ret;
 }
 
-
 describe('Test suite', function() {
-  it('check no items', function () {
-    assert.equal([], JSON.stringify([]));
-  });
-})
+    it('check no items', function () {
+      assert.deepEqual([], []);
+      assert.deepEqual({foo: 1}, {foo:1});
+    });
+  })
 
 mocha.run();
