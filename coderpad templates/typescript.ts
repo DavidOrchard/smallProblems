@@ -24,12 +24,16 @@ const it = (name: string, cb: Function) => {
   }
   return ret;
 }
-
+// https://mochajs.org/#dynamically-generating-tests
 describe('Test suite', function() {
-    it('check no items', function () {
-      assert.deepEqual([], []);
-      assert.deepEqual({foo: 1}, {foo:1});
-    });
-  })
+    const tests = [
+        {args: [],expected:[]}
+    ];
+    tests.forEach(({args, expected}) => 
+        it('check no items', function () {
+            assert.deepEqual([], []);
+        })
+    );
+  });
 
 mocha.run();
