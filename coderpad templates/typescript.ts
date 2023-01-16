@@ -24,14 +24,15 @@ const it = (name: string, cb: Function) => {
   }
   return ret;
 }
+const func = (args) => args;
 // https://mochajs.org/#dynamically-generating-tests
 describe('Test suite', function() {
     const tests = [
         {args: [],expected:[]}
     ];
     tests.forEach(({args, expected}) => 
-        it('check no items', function () {
-            assert.deepEqual([], []);
+        it('check '+args, function () {
+            assert.deepEqual(func(args), expected);
         })
     );
   });
