@@ -1,0 +1,62 @@
+var Mocha = require('mocha')
+var assert = require('assert');
+var mocha = new Mocha()
+
+mocha.suite.emit('pre-require', this, 'solution', mocha);
+
+
+const describe = (name: string, cb: Function) => {
+  console.log(name);
+  console.group();
+  const ret = cb();
+  console.groupEnd();
+  return ret;
+}
+
+const it = (name: string, cb: Function) => {
+  let ret;
+  try {
+     ret = cb();
+    console.log(`✅ ${name}`);
+  } catch (e) {
+    console.warn(`❌ ${name}`);
+    console.error(e);
+  }
+  return ret;
+}
+const merge = (intervals:number[][]) => {
+  if(intervals.length === 0 ) return [];
+  intervals.sort((a,b) => a[0]-b[0]);
+  const newIntervals = [[...intervals[0]]];
+  intervals.forEach(([start, end]) => {
+    const [accStart, accEnd] = newIntervals[newIntervals.length-1];
+    // console.table(newIntervals);
+    // console.log("start", start, 'end', end, 'accEnd', accEnd);
+    if(start <= accEnd && end > accEnd) {
+      newIntervals[newIntervals.length - 1][1] = end;
+    } else if(accStart !== start && accEnd !== end) {
+      newIntervals.push([start, end]);
+    }
+  });
+  return newIntervals;
+
+}
+/* https://leetcode.com/problems/merge-intervals/
+
+Perfect answer
+*/
+
+// https://mochajs.org/#dynamically-generating-tests
+describe('Test suite', function() {
+    const tests = [
+        {args: [[1,4],[4,5]],expected:[[1,5]]},
+        {args: [[1,3],[2,6],[8,10],[15,18]], expected: [[1,6],[8,10],[15,18]]}
+    ];
+    tests.forEach(({args, expected}) => 
+        it('check no items', function () {
+            assert.deepEqual(merge(args), expected);
+        })
+    );
+  });
+
+mocha.run();
