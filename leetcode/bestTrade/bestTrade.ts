@@ -47,34 +47,47 @@ Output: 0
 Explanation: In this case, no transactions are done and the max profit = 0.
 */
 
+// official answer
+// see also Kadanes algorithm
 const bestTrade = (prices:number[]): number => {
-  let sequences:number[] = [];
-  let low = prices[0];
-  let high = prices[0];
-  prices.forEach((price) => {
-    // if the prices is lower than the previous high, reduce the high.
-    // if the price is 
-    if(price < high && price < low) {
-      high = price;
-      low = price;
-    // } else if (price > low && price < high) {
-    //   low = price;
-    } else if(price > high) {
-      high = price;
-    } else if(price < low) {
-      // reset of the buy.
-      if(low !== high) {
-        sequences.push(high - low);
-      }
-      low = price;
-      high = price;
+    let minprice = Number.MAX_VALUE;
+    let maxprofit = 0;
+    for (let i = 0; i < prices.length; i++) {
+      console.log('i', i, prices[i], minprice, maxprofit);
+        if (prices[i] < minprice) {
+            minprice = prices[i];
+        } else if (prices[i] - minprice > maxprofit) {
+            maxprofit = prices[i] - minprice;
+        }
     }
-  });
-  if(low !== high) {
-    sequences.push(high - low);
-  }
-  sequences.sort();
-  return low !== high ? sequences[0] : 0;
+    return maxprofit;
+//   let sequences:number[] = [];
+//   let low = prices[0];
+//   let high = prices[0];
+//   prices.forEach((price) => {
+//     // if the prices is lower than the previous high, reduce the high.
+//     // if the price is 
+//     if(price < high && price < low) {
+//       high = price;
+//       low = price;
+//     // } else if (price > low && price < high) {
+//     //   low = price;
+//     } else if(price > high) {
+//       high = price;
+//     } else if(price < low) {
+//       // reset of the buy.
+//       if(low !== high) {
+//         sequences.push(high - low);
+//       }
+//       low = price;
+//       high = price;
+//     }
+//   });
+//   if(low !== high) {
+//     sequences.push(high - low);
+//   }
+//   sequences.sort();
+//   return low !== high ? sequences[0] : 0;
 }
 // https://mochajs.org/#dynamically-generating-tests
 describe('Test suite', function() {
@@ -88,7 +101,7 @@ describe('Test suite', function() {
     ];
     tests.forEach(({args, expected}) => 
         it('check args' + args, function () {
-            assert.deepEqual(bestTrade(args), expected);
+            assert.equal(bestTrade(args), expected);
         })
     );
   });
