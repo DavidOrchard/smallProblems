@@ -109,7 +109,7 @@ const leastInterval = function(tasks: string[], n:number) {
         }
       }
     }
-    return order;
+    return order.length;
 };
 // https://mochajs.org/#dynamically-generating-tests
 describe('Test suite', function() {
