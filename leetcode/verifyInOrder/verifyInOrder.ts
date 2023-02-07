@@ -19,6 +19,12 @@ You may assume that the input format is always valid.
 For example, it could never contain two consecutive commas, such as "1,,3".
 Note: You are not allowed to reconstruct the tree.
 */
+
+/* My solution is kind of lame
+  The accepted answer notes that each number adds 2 spots that require filling, and a # or number consumes 1 spot.
+  So just number of numbers * 2 - number of numbers or # === 0. 
+  */
+ 
 const describe = (name: string, cb: Function) => {
   console.log(name);
   console.group();
