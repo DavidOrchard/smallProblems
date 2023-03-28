@@ -26,7 +26,7 @@ const it = (name: string, cb: Function) => {
 
 /* Implement LRU Cache */
 
-class LRUCache {
+class LRUCache2 {
   constructor(capacity) {
       this.capacity = capacity;
       this.cache = {};
